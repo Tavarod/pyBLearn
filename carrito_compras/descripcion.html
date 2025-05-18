@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Solución: Carrito de Compras Desordenado</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        header, footer {
+            background-color: #f4f4f4;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-left: 3px solid #2c3e50;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1.2em;
+            color: #34495e;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        /* Estilo para el pseudocódigo y ejemplos de datos */
+        code {
+            background-color: #eef1f3;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c7254e; /* Un color distintivo para el código */
+        }
+        pre {
+            background-color: #eef1f3;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto; /* Para scroll horizontal si el código es largo */
+        }
+        pre code {
+            padding: 0;
+            background-color: transparent;
+            color: #c7254e;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .nota {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Análisis del Problema: El Carrito de Compras Desordenado</h1>
+    </header>
+
+    <section id="descripcion-problema">
+        <h2>1. Descripción del Problema</h2>
+        <p>En una tienda online, los productos agregados al carrito de compras a veces aparecen listados múltiples veces en lugar de agruparse con su cantidad total si se añaden en diferentes momentos.</p>
+        <p><strong>Objetivo:</strong> Describir la lógica para procesar y mostrar correctamente la lista de productos del carrito, agrupando los productos idénticos y sumando sus cantidades.</p>
+    </section>
+
+    <section id="datos-entrada">
+        <h2>2. Datos de Entrada para la Lógica</h2>
+        <p>La entrada es una secuencia de acciones de "agregar producto". Cada acción puede ser:</p>
+        <ul>
+            <li>Simplemente el <code>ID_Producto</code> (asumiendo que cada vez que se "agrega", se añade 1 unidad).</li>
+            <li>O un par <code>(ID_Producto, cantidad_agregada)</code>.</li>
+        </ul>
+        <p class="nota">Ejemplo de secuencia de IDs si se agrega 1 unidad a la vez: <code>["prod_A", "prod_B", "prod_A", "prod_C", "prod_A", "prod_B"]</code></p>
+    </section>
+
+    <section id="logica-solucion">
+        <h2>3. Lógica de la Solución Propuesta</h2>
+        <p>Se utilizará un diccionario (o mapa hash) para llevar la cuenta de los productos y sus cantidades acumuladas. Llamaremos a este diccionario <code>carrito_agrupado</code>.</p>
+
+        <ol>
+            <li>
+                <h3>Inicialización</h3>
+                <p>Crear un diccionario vacío:</p>
+                <pre><code>carrito_agrupado = {}</code></pre>
+            </li>
+            <li>
+                <h3>Procesamiento de cada producto agregado</h3>
+                <p>Para cada producto que el usuario intente agregar (identificado por <code>ID_actual</code> y con una <code>cantidad_actual</code>, que puede ser 1 por defecto):</p>
+                <ul>
+                    <li>
+                        <strong>Si <code>ID_actual</code> ya existe como clave en <code>carrito_agrupado</code>:</strong>
+                        <p>Obtener la cantidad previamente almacenada y sumarle la <code>cantidad_actual</code>.</p>
+                        <pre><code>cantidad_existente = carrito_agrupado[ID_actual]
+carrito_agrupado[ID_actual] = cantidad_existente + cantidad_actual</code></pre>
+                    </li>
+                    <li>
+                        <strong>Si <code>ID_actual</code> NO existe como clave en <code>carrito_agrupado</code>:</strong>
+                        <p>Agregar el <code>ID_actual</code> como nueva clave al diccionario, asignándole la <code>cantidad_actual</code>.</p>
+                        <pre><code>carrito_agrupado[ID_actual] = cantidad_actual</code></pre>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Resultado Final</h3>
+                <p>Una vez procesados todos los productos de la entrada, el diccionario <code>carrito_agrupado</code> contendrá los productos correctamente agrupados.</p>
+                <p><strong>Ejemplo:</strong></p>
+                <p>Si la entrada fue una secuencia de IDs (asumiendo cantidad 1 cada vez): <code>"producto_123"</code>, <code>"producto_456"</code>, <code>"producto_123"</code>, <code>"producto_123"</code>, <code>"producto_789"</code>.</p>
+                <p>El diccionario <code>carrito_agrupado</code> resultante sería:</p>
+                <pre><code>{
+    "producto_123": 3,
+    "producto_456": 1,
+    "producto_789": 1
+}</code></pre>
+            </li>
+        </ol>
+    </section>
+
+    <section id="resumen-enfoque">
+        <h2>4. Resumen del Enfoque</h2>
+        <p>La clave de esta solución es el uso de un diccionario donde el <strong>ID del producto</strong> actúa como clave única, y el <strong>valor asociado</strong> es la cantidad total acumulada de dicho producto.</p>
+        <p>Este enfoque es eficiente porque la búsqueda, inserción y actualización de elementos en un diccionario suelen tener un rendimiento promedio muy bueno (tiempo constante, O(1), en muchos casos).</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 - Documento de Análisis Lógico (Solución Problema 1)</p>
+    </footer>
+
+</body>
+</html>
