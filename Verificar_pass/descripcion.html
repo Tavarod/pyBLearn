@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Explicación Código Python: Verificador de Contraseña</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        header, footer {
+            background-color: #f4f4f4;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-left: 3px solid #2c3e50; /* Azul oscuro */
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50; /* Azul oscuro */
+        }
+        h1 {
+            font-size: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1.2em;
+            color: #34495e; /* Azul más claro */
+        }
+        h4 {
+            font-size: 1.1em;
+            color: #34495e;
+            margin-top: 15px;
+        }
+        p, li {
+            margin-bottom: 10px;
+        }
+        /* Estilo para el código */
+        code {
+            background-color: #eef1f3; /* Gris claro */
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c7254e; /* Rosa oscuro para el código */
+        }
+        pre {
+            background-color: #eef1f3; /* Gris claro */
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto; /* Para scroll horizontal si el código es largo */
+        }
+        pre code {
+            padding: 0;
+            background-color: transparent;
+            color: #c7254e; /* Rosa oscuro para el código, heredado */
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        .nota {
+            font-style: italic;
+            color: #7f8c8d; /* Gris medio */
+            font-size: 0.9em;
+        }
+        .codigo-python {
+            color: #000000; /* Código Python en negro dentro de pre code */
+        }
+        pre code.language-python .comment { color: #008000; } /* Comentarios en verde */
+        pre code.language-python .keyword { color: #0000ff; } /* Palabras clave en azul */
+        pre code.language-python .string { color: #a31515; } /* Strings en marrón/rojo */
+        pre code.language-python .function { color: #795e26; } /* Nombres de función */
+        pre code.language-python .boolean { color: #0000ff; } /* Booleanos en azul */
+        pre code.language-python .none { color: #0000ff; } /* None en azul */
+        pre code.language-python .number { color: #098658; } /* Números en verde oscuro */
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Explicación del Código Python: Verificador de Contraseña</h1>
+    </header>
+
+    <section id="introduccion">
+        <h2>1. Introducción al Código</h2>
+        <p>El siguiente código Python define una función llamada <code>verificar_contraseña</code>. El propósito principal de esta función es analizar una cadena de texto (que representa una contraseña) y determinar si cumple con un conjunto de criterios de seguridad predefinidos.</p>
+        <p>Los criterios que se verifican son:</p>
+        <ul>
+            <li>Longitud mínima.</li>
+            <li>Presencia de al menos una letra mayúscula.</li>
+            <li>Presencia de al menos un número.</li>
+            <li>Presencia de al menos un carácter especial de una lista definida.</li>
+        </ul>
+        <p>Si la contraseña es válida, la función devolverá <code>None</code>. Si no es válida, devolverá un string con los criterios que no se cumplieron.</p>
+    </section>
+
+    <section id="estructura-funcion">
+        <h2>2. Estructura General de la Función</h2>
+        <p>El código se centra en una única función:</p>
+        <pre><code class="language-python"><span class="keyword">def</span> <span class="function">verificar_contraseña</span>(contraseña):
+    <span class="comment"># ... cuerpo de la función ...</span>
+    <span class="keyword">if</span> <span class="comment">#condición de validez</span>:
+        <span class="keyword">return</span> <span class="none">None</span> <span class="comment"># Si es válida</span>
+    <span class="keyword">else</span>:
+        <span class="keyword">return</span> <span class="string">"Mensaje de error"</span> <span class="comment"># Si no es válida</span></code></pre>
+        <ul>
+            <li><code>def verificar_contraseña(contraseña):</code>: Esta línea define la función.
+                <ul>
+                    <li><code>def</code>: Es la palabra clave en Python para iniciar la definición de una función.</li>
+                    <li><code>verificar_contraseña</code>: Es el nombre que le damos a nuestra función.</li>
+                    <li><code>(contraseña)</code>: Indica que la función espera recibir un argumento o parámetro. Dentro de la función, este argumento se conocerá con el nombre <code>contraseña</code> y contendrá el string que queremos verificar.</li>
+                </ul>
+            </li>
+            <li>El cuerpo de la función contiene toda la lógica para realizar las validaciones.</li>
+            <li>Al final, la función devuelve <code>None</code> si la contraseña cumple todos los criterios, o un string detallando los errores en caso contrario.</li>
+        </ul>
+    </section>
+
+    <section id="paso-a-paso">
+        <h2>3. Paso a Paso Dentro de la Función</h2>
+
+        <h3>3.1. Inicializaciones</h3>
+        <p>Al comienzo de la función, se preparan algunas variables:</p>
+        <pre><code class="language-python">mensajes_error = []
+caracteres_especiales = <span class="string">"!@#$%&"</span> <span class="comment"># Define tus caracteres especiales</span></code></pre>
+        <ul>
+            <li><code>mensajes_error = []</code>: Se crea una lista vacía. Esta lista se usará para almacenar mensajes de error si la contraseña no cumple con alguno de los criterios.</li>
+            <li><code>caracteres_especiales = "!@#$%&"</code>: Se define una cadena de texto que contiene los caracteres que se considerarán "especiales". Esta lista puede ser modificada para incluir otros símbolos.</li>
+        </ul>
+
+        <h3>3.2. Criterio 1: Longitud de la Contraseña</h3>
+        <pre><code class="language-python"><span class="comment"># Criterio 1: Longitud</span>
+<span class="keyword">if</span> <span class="function">len</span>(contraseña) < <span class="number">8</span>:
+    mensajes_error.append(<span class="string">"Mínimo 8 caracteres."</span>)</code></pre>
+        <ul>
+            <li><code>if len(contraseña) < 8:</code>: Se verifica si la longitud de la <code>contraseña</code> (obtenida con la función <code>len()</code>) es menor que 8.</li>
+            <li>Si la condición es verdadera (la contraseña es demasiado corta), se añade el mensaje <code>"Mínimo 8 caracteres."</code> a la lista <code>mensajes_error</code> usando el método <code>append()</code>.</li>
+        </ul>
+
+        <h3>3.3. Criterios de Contenido: Banderas y Recorrido de la Contraseña</h3>
+        <p>Primero, se inicializan unas variables "bandera" o "flags". Estas variables booleanas (<code>True</code> o <code>False</code>) nos ayudarán a rastrear si hemos encontrado los tipos de caracteres requeridos.</p>
+        <pre><code class="language-python"><span class="comment"># Criterios 2, 3, 4: Contenido (inicializar banderas)</span>
+tiene_mayuscula = <span class="boolean">False</span>
+tiene_numero = <span class="boolean">False</span>
+tiene_especial = <span class="boolean">False</span></code></pre>
+        <p>Luego, se recorre cada carácter de la contraseña para verificar su tipo:</p>
+        <pre><code class="language-python"><span class="keyword">for</span> caracter <span class="keyword">in</span> contraseña:
+    <span class="keyword">if</span> caracter.isupper():
+        tiene_mayuscula = <span class="boolean">True</span>
+    <span class="keyword">elif</span> caracter.isdigit():
+        tiene_numero = <span class="boolean">True</span>
+    <span class="keyword">elif</span> caracter <span class="keyword">in</span> caracteres_especiales:
+        tiene_especial = <span class="boolean">True</span></code></pre>
+        <ul>
+            <li><code>for caracter in contraseña:</code>: Este bucle <code>for</code> itera sobre cada <code>caracter</code> individual dentro del string <code>contraseña</code>.</li>
+            <li><code>if caracter.isupper():</code>: El método <code>isupper()</code> de los strings devuelve <code>True</code> si el <code>caracter</code> es una letra mayúscula. Si es así, la bandera <code>tiene_mayuscula</code> se establece en <code>True</code>.</li>
+            <li><code>elif caracter.isdigit():</code>: Si no fue mayúscula, se verifica si es un dígito con <code>isdigit()</code>. Si lo es, <code>tiene_numero</code> se vuelve <code>True</code>.</li>
+            <li><code>elif caracter in caracteres_especiales:</code>: Si no fue ni mayúscula ni dígito, se verifica si el <code>caracter</code> está presente en la cadena <code>caracteres_especiales</code>. De ser así, <code>tiene_especial</code> se establece en <code>True</code>.</li>
+            <li><span class="nota">Una vez que una bandera se establece en <code>True</code>, permanece así, ya que solo necesitamos confirmar la existencia de al menos un carácter de cada tipo.</span></li>
+        </ul>
+
+        <h3>3.4. Verificación de Criterios de Contenido (Después del Bucle)</h3>
+        <p>Una vez que el bucle ha revisado toda la contraseña, se comprueba el estado de las banderas:</p>
+        <pre><code class="language-python"><span class="keyword">if</span> <span class="keyword">not</span> tiene_mayuscula:
+    mensajes_error.append(<span class="string">"Debe contener al menos una mayúscula."</span>)
+<span class="keyword">if</span> <span class="keyword">not</span> tiene_numero:
+    mensajes_error.append(<span class="string">"Debe contener al menos un número."</span>)
+<span class="keyword">if</span> <span class="keyword">not</span> tiene_especial:
+    mensajes_error.append(<span class="string">f"Debe contener al menos un carácter especial (ej: {caracteres_especiales})."</span>)</code></pre>
+        <ul>
+            <li><code>if not tiene_mayuscula:</code>: Si la bandera <code>tiene_mayuscula</code> sigue siendo <code>False</code> (es decir, no se encontró ninguna mayúscula), se añade el mensaje de error correspondiente a <code>mensajes_error</code>.</li>
+            <li>Lo mismo ocurre para <code>tiene_numero</code> y <code>tiene_especial</code>.</li>
+            <li>La línea <code>f"Debe contener al menos un carácter especial (ej: {caracteres_especiales})."</code> utiliza una "f-string" de Python. Esto permite incrustar el valor de la variable <code>caracteres_especiales</code> directamente en el mensaje, mostrando al usuario qué tipo de caracteres se esperan.</li>
+        </ul>
+
+        <h3>3.5. Generación del Resultado Final</h3>
+        <p>Finalmente, se decide qué valor devolver basándose en si se acumularon errores o no:</p>
+        <pre><code class="language-python"><span class="keyword">if</span> <span class="keyword">not</span> mensajes_error: <span class="comment"># Si la lista está vacía</span>
+    <span class="keyword">return</span> <span class="none">None</span> <span class="comment"># Indica que la contraseña es válida</span>
+<span class="keyword">else</span>:
+    <span class="comment"># Si hay errores, se unen en un solo string</span>
+    <span class="keyword">return</span> <span class="string">"Contraseña no válida: "</span> + <span class="string">", "</span>.join(mensajes_error)</code></pre>
+        <ul>
+            <li><code>if not mensajes_error:</code>: En Python, una lista vacía se evalúa como <code>False</code> en un contexto booleano. Por lo tanto, <code>not mensajes_error</code> es <code>True</code> si la lista <code>mensajes_error</code> está vacía.</li>
+            <li>Si está vacía (no hay errores), la función devuelve <code>None</code>. Este es un valor especial en Python que a menudo se usa para indicar la ausencia de un valor o un resultado "nulo" o "vacío", que en este contexto significa que no hay errores y la contraseña es válida.</li>
+            <li><code>else:</code>: Si la lista <code>mensajes_error</code> no está vacía (es decir, contiene al menos un mensaje de error).</li>
+            <li><code>return "Contraseña no válida: " + ", ".join(mensajes_error)</code>:
+                <ul>
+                    <li><code>", ".join(mensajes_error)</code>: El método <code>join()</code> se usa en una cadena (aquí, <code>", "</code>) y toma una lista de cadenas como argumento. Une todos los elementos de la lista en una sola cadena, usando la cadena inicial (<code>", "</code>) como separador entre cada elemento.</li>
+                    <li>El resultado es un mensaje que comienza con "Contraseña no válida: " seguido de todos los mensajes de error recopilados, separados por coma y espacio.</li>
+                </ul>
+            </li>
+        </ul>
+        <h4>Ventajas de Devolver <code>None</code> para Casos Válidos</h4>
+        <p>El enfoque de devolver <code>None</code> cuando la contraseña es válida (y un string de error en caso contrario) presenta varias ventajas:</p>
+        <ul>
+            <li>
+                <strong>Robustez:</strong> <code>None</code> es un valor singular y único en Python. Para verificar si la contraseña fue válida, el código que llama a la función puede usar una comparación directa y fiable como <code>resultado_validacion is None</code>. Esto es más robusto que comparar contra un string específico como "Contraseña válida.", ya que un pequeño error tipográfico en el string podría llevar a errores lógicos difíciles de detectar.
+            </li>
+            <li>
+                <strong>Separación de Responsabilidades:</strong> La función <code>verificar_contraseña</code> se enfoca únicamente en su tarea principal: validar la contraseña y reportar errores si existen. No se preocupa por cómo se debe presentar un mensaje de "éxito" al usuario final. Esta responsabilidad recae en la parte del código que llama a la función, la cual tiene el contexto adecuado (por ejemplo, si es una aplicación web, una de escritorio, etc.) para decidir cómo informar al usuario que la contraseña es correcta (ej. mostrar un mensaje, cambiar el color de un campo, etc.).
+            </li>
+            <li>
+                <strong>Claridad Programática:</strong> Desde el punto de vista del programador que utiliza esta función, es muy claro que si la función devuelve <code>None</code>, significa que "no hay errores que reportar", y por lo tanto, la validación fue exitosa. Si devuelve cualquier otra cosa (en este caso, un string), significa que hubo uno o más errores.
+            </li>
+        </ul>
+        <p class="nota">El código que llama a <code>verificar_contraseña</code> manejaría el resultado así:</p>
+        <pre><code class="language-python">resultado = verificar_contraseña(<span class="string">"MiClave123!"</span>)
+<span class="keyword">if</span> resultado <span class="keyword">is</span> <span class="none">None</span>:
+    <span class="function">print</span>(<span class="string">"La contraseña es perfectamente válida."</span>)
+<span class="keyword">else</span>:
+    <span class="function">print</span>(resultado) <span class="comment"># Imprime "Contraseña no válida: ..."</span></code></pre>
+
+    </section>
+
+    <section id="ejemplos-prueba">
+        <h2>4. Ejemplos de Prueba</h2>
+        <p>El código incluye ejemplos comentados para probar la función:</p>
+        <pre><code class="language-python"><span class="comment"># print(verificar_contraseña("clave"))</span>
+<span class="comment"># print(verificar_contraseña("Clave123"))</span>
+<span class="comment"># print(verificar_contraseña("Clave123!"))</span></code></pre>
+        <ul>
+            <li>
+                <code>verificar_contraseña("clave")</code>:
+                <p>Esta contraseña no cumple varios criterios:</p>
+                <ul>
+                    <li>Longitud menor a 8.</li>
+                    <li>No tiene mayúsculas.</li>
+                    <li>No tiene números.</li>
+                    <li>No tiene caracteres especiales.</li>
+                </ul>
+                <p>Resultado devuelto por la función: <code>"Contraseña no válida: Mínimo 8 caracteres., Debe contener al menos una mayúscula., Debe contener al menos un número., Debe contener al menos un carácter especial (ej: !@#$%&)."</code></p>
+            </li>
+            <li>
+                <code>verificar_contraseña("Clave123")</code>:
+                <p>Esta contraseña cumple con longitud, mayúsculas y números, pero no tiene caracteres especiales.</p>
+                <p>Resultado devuelto por la función: <code>"Contraseña no válida: Debe contener al menos un carácter especial (ej: !@#$%&)."</code></p>
+            </li>
+            <li>
+                <code>verificar_contraseña("Clave123!")</code>:
+                <p>Esta contraseña cumple todos los criterios.</p>
+                <p>Resultado devuelto por la función: <code>None</code> (lo que indica que es válida, y el código que llama a la función interpretaría esto como un éxito).</p>
+            </li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 - Explicación Detallada de Código Python</p>
+    </footer>
+
+</body>
+</html>
